@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.LoginAndSignUp"
+        tools:targetApi="31">
+        <activity
+            android:name=".View.AppointmentCreateActivity"
+            android:exported="false" />
+        <activity
+            android:name=".View.DrActivity"
+            android:exported="false"
+            android:label="@string/title_activity_dr"
+            android:theme="@style/Theme.LoginAndSignUp.NoActionBar" />
+        <activity
+            android:name=".View.PatientActivity"
+            android:exported="false"
+            android:label="@string/title_activity_patient"
+            android:theme="@style/Theme.LoginAndSignUp.NoActionBar" />
+        <activity
+            android:name=".View.CategoryActivity"
+            android:exported="false" />
+        <activity
+            android:name=".View.AdminActivity"
+            android:exported="false"
+            android:label="@string/title_activity_admin"
+            android:theme="@style/Theme.LoginAndSignUp.NoActionBar" />
+        <activity
+            android:name=".View.SplashScreen"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".View.SignInActivity"
+            android:exported="true">
+
+            <!--
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            -->
+        </activity>
+        <activity
+            android:name=".View.SignUpActivity"
+            android:exported="false" />
+        <activity
+            android:name=".View.MainActivity"
+            android:exported="false" />
+    </application>
+
+</manifest>

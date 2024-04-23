@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/signup_screen"
+    android:orientation="vertical"
+    tools:context=".View.SignUpActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:id="@+id/radioGroupLayout"
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="120dp"
+        android:gravity="center">
+        <RadioGroup
+            android:id="@+id/userRadioGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/patient_radio_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Patient"
+                android:checked="true" />
+
+            <RadioButton
+                android:id="@+id/doctor_radio_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Doctor"
+                android:layout_marginLeft="20dp"/>
+        </RadioGroup>
+
+        <RadioGroup
+            android:id="@+id/loginRadioGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/email_radio_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Login with Email"
+                android:checked="true" />
+
+            <RadioButton
+                android:id="@+id/google_radio_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Login with Google"
+                android:layout_marginLeft="20dp"/>
+        </RadioGroup>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="30dp"
+        android:gravity="center"
+        android:paddingLeft="13dp"
+        android:paddingRight="13dp">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/nameLayout"
+            style="@style/LoginTextInputOuterFieldStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:boxStrokeColor="@color/yellow"
+            app:hintTextColor="@color/yellow"
+            android:layout_margin="1dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/nameEt"
+                style="@style/LoginTextInputInnerFieldStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Type your Name"
+                android:inputType="textPersonName" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/emailLayout"
+            style="@style/LoginTextInputOuterFieldStyle"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:boxStrokeColor="@color/yellow"
+            app:hintTextColor="@color/yellow"
+            android:layout_margin="1dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/emailEt"
+                style="@style/LoginTextInputInnerFieldStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Type your Email"
+                android:inputType="textEmailAddress" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/placeLayout"
+            style="@style/LoginTextInputOuterFieldStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:boxStrokeColor="@color/yellow"
+            app:hintTextColor="@color/yellow"
+            android:layout_margin="1dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/placeEt"
+                style="@style/LoginTextInputInnerFieldStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Type your Plac"
+                android:inputType="textPersonName" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/phoneLayout"
+            style="@style/LoginTextInputOuterFieldStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:boxStrokeColor="@color/yellow"
+            app:hintTextColor="@color/yellow"
+            android:layout_margin="1dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/phoneEt"
+                style="@style/LoginTextInputInnerFieldStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Type your Phone Number"
+                android:inputType="phone"
+                android:ems="10"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/catLayout"
+            style="@style/LoginTextInputOuterFieldStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:boxStrokeColor="@color/yellow"
+            app:hintTextColor="@color/yellow"
+            android:layout_margin="1dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/spin_value"
+                    android:text="Choose your category : "
+                    android:textColor="@color/black"/>
+                <Spinner
+                    android:id="@+id/mySpinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:spinnerMode="dialog"
+                    android:textColor="@color/black"
+                    />
+
+                <!--            <com.google.android.material.textfield.TextInputEditText-->
+                <!--                android:id="@+id/catEt"-->
+                <!--                style="@style/LoginTextInputInnerFieldStyle"-->
+                <!--                android:layout_width="match_parent"-->
+                <!--                android:layout_height="wrap_content"-->
+                <!--                android:hint="Select your Category"-->
+                <!--                android:inputType="textPersonName" />-->
+            </LinearLayout>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/passwordLayout"
+            style="@style/LoginTextInputOuterFieldStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:boxStrokeColor="@color/yellow"
+            app:hintTextColor="@color/yellow"
+            app:passwordToggleEnabled="true"
+            android:layout_margin="1dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/passET"
+                style="@style/LoginTextInputInnerFieldStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Type Your Password"
+                android:inputType="textPassword" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/yellow"
+            android:text="Sign Up"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="3dp"
+            android:layout_marginRight="3dp"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+        <com.google.android.gms.common.SignInButton
+            android:id="@+id/sign_in_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"/>
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:layout_marginTop="10dp"
+            android:text="Already Registered , Sign In !" />
+    </LinearLayout>
+
+
+
+
+
+
+
+</LinearLayout>
