@@ -1,6 +1,5 @@
 package ie.setu.medicare.View
 
-import AdminActivity
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences

@@ -1,4 +1,6 @@
 package ie.setu.medicare.Model
 
-class Slots {
-}
+data class Slots(
+    val slotId: String,
+    val slotName: String
+)

@@ -19,8 +19,7 @@ import ie.setu.medicare.R
 import ie.setu.medicare.databinding.ActivityAdminBinding
 import ie.setu.medicare.databinding.ActivityDrBinding
 
-class
-DrActivity : AppCompatActivity() {
+class DrActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityDrBinding

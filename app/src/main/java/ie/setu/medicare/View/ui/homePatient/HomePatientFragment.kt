@@ -86,7 +86,8 @@ class HomePatientFragment : Fragment() {
 
         val intent = Intent(requireContext(), AppointmentCreateActivity::class.java)
         //val user = Users("John Doe", "john.doe@example.com", "1234567890", 1, "password", "catId", "place")
-        intent.putExtra("name", usersList[position].name)
+        intent.putExtra("drName", usersList[position].name)
+        intent.putExtra("drId", usersList[position].id)
         startActivity(intent)
     }
 

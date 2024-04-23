@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import ie.setu.medicare.View.CategoryActivity
+import ie.setu.medicare.View.SlotActivity
 import ie.setu.medicare.databinding.FragmentHomeBinding
 
 class HomeFragment : Fragment() {
@@ -35,6 +36,11 @@ class HomeFragment : Fragment() {
         }
         binding.catButton.setOnClickListener {
             val intent = Intent(activity, CategoryActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.slotButton.setOnClickListener {
+            val intent = Intent(activity, SlotActivity::class.java)
             startActivity(intent)
         }
 

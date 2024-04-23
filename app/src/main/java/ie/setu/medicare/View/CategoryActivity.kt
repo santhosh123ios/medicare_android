@@ -29,7 +29,6 @@ class CategoryActivity : AppCompatActivity() {
     private val viewModel: SignInActivityVM by viewModels()
     val database = Firebase.database
 
-
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: ItemAdapter
     val categoryList = mutableListOf<CategoryList>()

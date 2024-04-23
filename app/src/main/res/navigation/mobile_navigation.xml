@@ -7,9 +7,9 @@
 
     <fragment
         android:id="@+id/nav_home"
-        android:name="ie.setu.medicare.View.ui.homeDr.HomeDrFragment"
+        android:name="ie.setu.medicare.View.ui.home.HomeFragment"
         android:label="@string/app_name"
-        tools:layout="@layout/fragment_home_dr" />
+        tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/nav_gallery"
