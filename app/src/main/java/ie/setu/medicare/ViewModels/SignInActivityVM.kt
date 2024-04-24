@@ -14,6 +14,7 @@ import ie.setu.medicare.Model.Appointment
 import ie.setu.medicare.Model.Appointments
 import ie.setu.medicare.Model.Category
 import ie.setu.medicare.Model.CategoryList
+import ie.setu.medicare.Model.Report
 import ie.setu.medicare.Model.Slots
 import ie.setu.medicare.Model.SlotsList
 import ie.setu.medicare.Model.Users
@@ -351,4 +352,41 @@ class SignInActivityVM : ViewModel() {
             }
     }
 
+    fun getMyAppoinmentList(ptId:String,callback: (List<Appointment>?) -> Unit) {
+        // Query to retrieve items with type = 1
+        val usersRef: DatabaseReference = database.getReference("appointments")
+        val query = usersRef.orderByChild("drId").equalTo(ptId) // Specify type as double
+
+        query.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val itemList = mutableListOf<Appointment>()
+                for (itemSnapshot in snapshot.children) {
+                    val item = itemSnapshot.getValue(Appointment::class.java)
+                    item?.let {
+                        itemList.add(it)
+                    }
+                }
+                callback(itemList)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                // Handle error
+                callback(null)
+            }
+        })
+    }
+
+    fun createReport(report: Report, callback: (Boolean) -> Unit) {
+        val appointmentRef: DatabaseReference = database.getReference("reports")
+        val apId = report.rpId
+        appointmentRef.child(apId).setValue(report)
+            .addOnSuccessListener {
+                // Successfully inserted
+                callback(true)
+            }
+            .addOnFailureListener {
+                // Failed to insert
+                callback(false)
+            }
+    }
 }

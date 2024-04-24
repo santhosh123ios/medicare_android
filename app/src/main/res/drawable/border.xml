@@ -1,0 +1,15 @@
+<!-- res/drawable/shape_with_border.xml -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+
+    <!-- Define solid fill color -->
+    <solid android:color="#FFFFFF" />
+
+    <!-- Define the stroke (border) -->
+    <stroke
+        android:width="2dp"
+        android:color="@color/yellow" />
+
+    <!-- Optionally, you can set the corner radius -->
+    <corners android:radius="4dp" />
+</shape>
