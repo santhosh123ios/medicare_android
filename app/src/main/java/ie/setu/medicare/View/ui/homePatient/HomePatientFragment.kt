@@ -112,16 +112,5 @@ class HomePatientFragment : Fragment() {
                 println("Failed to retrieve items of type 1.")
             }
         }
-//        viewModel.getCategories { categories ->
-//            if (categories != null) {
-//                // Successfully retrieved categories
-//                categoryList.removeAll(categoryList)
-//                categoryList.addAll(categories)
-//                adapter.notifyDataSetChanged()
-//            } else {
-//                // Failed to retrieve categories
-//                println("Failed to retrieve categories")
-//            }
-//        }
     }
 }

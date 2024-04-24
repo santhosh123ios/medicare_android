@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import ie.setu.medicare.Model.Appointment
+import ie.setu.medicare.Model.Appointments
 import ie.setu.medicare.Model.Category
 import ie.setu.medicare.Model.SlotsList
 import ie.setu.medicare.R
@@ -84,7 +85,7 @@ class AppointmentCreateActivity : AppCompatActivity() {
         submitBtn.setOnClickListener {
             val myRef = database.getReference("appointments")
             val apId = myRef.push().key
-            val appointment = Appointment("$apId","$selectedDate","$selectedSlotName","$selectedSlotId","$ptName","$ptId","$drName","$drId" ,"pending")
+            val appointment = Appointments("$apId","$selectedDate","$selectedSlotName","$selectedSlotId","$ptName","$ptId","$drName","$drId" ,"pending")
             viewModel.createAppointment(appointment) { isSuccess ->
                 if (isSuccess) {
                     // Insertion successful
@@ -137,7 +138,7 @@ class AppointmentCreateActivity : AppCompatActivity() {
         recyclerView.adapter = adapter
 
         ptName = sharedPreferences.getString("name", "User Name").toString()
-        ptId = sharedPreferences.getString("id", "user@example.com").toString()
+        ptId = sharedPreferences.getString("id", "id").toString()
 
         drName = intent.getStringExtra("drName").toString()
         drId = intent.getStringExtra("drId").toString()

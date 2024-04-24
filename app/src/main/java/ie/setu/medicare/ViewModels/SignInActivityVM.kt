@@ -11,6 +11,7 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import ie.setu.medicare.Model.Appointment
+import ie.setu.medicare.Model.Appointments
 import ie.setu.medicare.Model.Category
 import ie.setu.medicare.Model.CategoryList
 import ie.setu.medicare.Model.Slots
@@ -289,7 +290,7 @@ class SignInActivityVM : ViewModel() {
             }
     }
 
-    fun createAppointment(appointment: Appointment, callback: (Boolean) -> Unit) {
+    fun createAppointment(appointment: Appointments, callback: (Boolean) -> Unit) {
         val appointmentRef: DatabaseReference = database.getReference("appointments")
         val apId = appointment.apId
         appointmentRef.child(apId).setValue(appointment)
@@ -299,6 +300,53 @@ class SignInActivityVM : ViewModel() {
             }
             .addOnFailureListener {
                 // Failed to insert
+                callback(false)
+            }
+    }
+
+    fun getMyBookingList(ptId:String,callback: (List<Appointment>?) -> Unit) {
+        // Query to retrieve items with type = 1
+        val usersRef: DatabaseReference = database.getReference("appointments")
+        val query = usersRef.orderByChild("ptId").equalTo(ptId) // Specify type as double
+
+        query.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val itemList = mutableListOf<Appointment>()
+                for (itemSnapshot in snapshot.children) {
+                    val item = itemSnapshot.getValue(Appointment::class.java)
+                    item?.let {
+                        itemList.add(it)
+                    }
+                }
+                callback(itemList)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                // Handle error
+                callback(null)
+            }
+        })
+    }
+
+    fun cancelBooking(apId: String, status: String, callback: (Boolean) -> Unit) {
+        // Reference the category item in the database using catId
+        val categoriesRef: DatabaseReference = database.getReference("appointments")
+        val categoryRef = categoriesRef.child(apId)
+
+        // Convert updated category to a map of properties to update
+        val updates = mapOf(
+            "apId" to apId,
+            "status" to status
+        )
+
+        // Update the category in the database
+        categoryRef.updateChildren(updates)
+            .addOnSuccessListener {
+                // Update successful
+                callback(true)
+            }
+            .addOnFailureListener {
+                // Update failed
                 callback(false)
             }
     }
