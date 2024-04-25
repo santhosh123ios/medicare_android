@@ -7,8 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import ie.setu.medicare.View.BookingListActivity
 import ie.setu.medicare.View.CategoryActivity
+import ie.setu.medicare.View.ReportListActivity
 import ie.setu.medicare.View.SlotActivity
+import ie.setu.medicare.View.UsersListActivity
 import ie.setu.medicare.databinding.FragmentHomeBinding
 
 class HomeFragment : Fragment() {
@@ -41,6 +44,20 @@ class HomeFragment : Fragment() {
 
         binding.slotButton.setOnClickListener {
             val intent = Intent(activity, SlotActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.reportButton.setOnClickListener {
+            val intent = Intent(activity, ReportListActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.bookingButton.setOnClickListener {
+            val intent = Intent(activity, BookingListActivity::class.java)
+            startActivity(intent)
+        }
+        binding.usersButton.setOnClickListener {
+            val intent = Intent(activity, UsersListActivity::class.java)
             startActivity(intent)
         }
 

@@ -5,7 +5,9 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.icu.util.Calendar
+import android.net.Uri
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.Toast
@@ -42,6 +44,8 @@ class AppointmentCreateActivity : AppCompatActivity() {
     var ptId = ""
     var drName = ""
     var drId = ""
+    var latitude = ""
+    var longitude = ""
     var selectedSlotId = ""
     var selectedSlotName = ""
     private val viewModel: SignInActivityVM by viewModels()
@@ -68,9 +72,15 @@ class AppointmentCreateActivity : AppCompatActivity() {
             finish()
         }
 
+
+
         // Get a reference to the button
         val datePicButton = findViewById<Button>(R.id.date_pic)
         val submitBtn = findViewById<Button>(R.id.submitBtn)
+        val directionBtn = findViewById<Button>(R.id.directionBtn)
+
+
+
         // Get the current date
         val currentDate = Date()
 
@@ -142,8 +152,25 @@ class AppointmentCreateActivity : AppCompatActivity() {
 
         drName = intent.getStringExtra("drName").toString()
         drId = intent.getStringExtra("drId").toString()
+        latitude = intent.getStringExtra("latitude").toString()
+        longitude = intent.getStringExtra("longitude").toString()
+
+        directionBtn.setOnClickListener {
+
+            openGoogleMapsLocation(latitude,longitude)
+        }
+
         //ptId = intent.getStringExtra("drId").toString()
         println("SANTYHOSH USER IS : "+ptName)
+
+        if (longitude!="" && longitude!="")
+        {
+            directionBtn.visibility = View.VISIBLE
+        }
+        else
+        {
+            directionBtn.visibility = View.GONE
+        }
 
         viewModel.getSlots { slots ->
             if (slots != null) {
@@ -156,6 +183,26 @@ class AppointmentCreateActivity : AppCompatActivity() {
                 // Failed to retrieve categories
                 println("Failed to retrieve Slot")
             }
+        }
+    }
+
+    fun openGoogleMapsLocation(lat: String, lng: String) {
+
+        var currentLat = "0.00"
+        var currentLng = "0.00"
+        // Create a URI for the directions using the navigation scheme
+        val uri = Uri.parse("google.navigation:q=$lat,$lng&origin=$currentLat,$currentLng")
+
+        // Create an intent with the URI and the ACTION_VIEW action
+        val intent = Intent(Intent.ACTION_VIEW, uri)
+
+        // Verify that there is an app that can handle the intent
+        if (intent.resolveActivity(packageManager) != null) {
+            // Start the intent to open Google Maps with the directions
+            startActivity(intent)
+        } else {
+            // Handle the case where there is no app that can handle the intent
+            Toast.makeText(this, "Google Maps app not available", Toast.LENGTH_SHORT).show()
         }
     }
 

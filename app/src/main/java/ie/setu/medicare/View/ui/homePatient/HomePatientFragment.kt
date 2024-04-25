@@ -96,6 +96,8 @@ class HomePatientFragment : Fragment() {
         //val user = Users("John Doe", "john.doe@example.com", "1234567890", 1, "password", "catId", "place")
         intent.putExtra("drName", usersList[position].name)
         intent.putExtra("drId", usersList[position].id)
+        intent.putExtra("latitude", usersList[position].latitude)
+        intent.putExtra("longitude", usersList[position].longitude)
         startActivity(intent)
     }
 

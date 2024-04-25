@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.Menu
+import android.widget.ImageView
 import android.widget.TextView
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.navigation.NavigationView
@@ -15,6 +16,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
+import com.bumptech.glide.Glide
 import ie.setu.medicare.R
 import ie.setu.medicare.databinding.ActivityAdminBinding
 import ie.setu.medicare.databinding.ActivityDrBinding
@@ -81,6 +83,7 @@ class DrActivity : AppCompatActivity() {
         sharedPreferences.edit().putString("email", "").apply()
         sharedPreferences.edit().putInt("type", 9).apply()
         sharedPreferences.edit().putString("id", "").apply()
+        sharedPreferences.edit().putString("image", "").apply()
         val intent = Intent(this, SplashScreen::class.java)
         startActivity(intent)
         finish()
@@ -91,9 +94,9 @@ class DrActivity : AppCompatActivity() {
         // Get a reference to the header view
         val headerView = navView.getHeaderView(0)
 
-        // Find the TextViews for name and email in the header view
         val nameTextView: TextView = headerView.findViewById(R.id.name_header)
         val emailTextView: TextView = headerView.findViewById(R.id.email_header)
+        var profileImg: ImageView = headerView.findViewById(R.id.imageView)
 
         // Retrieve the user's name and email from shared preferences
         val name = sharedPreferences.getString("name", "User Name")
@@ -102,6 +105,17 @@ class DrActivity : AppCompatActivity() {
         // Set the name and email in the header view
         nameTextView.text = name
         emailTextView.text = email
+        val imageUrl = sharedPreferences.getString("image", "no_url").toString()
+        if (imageUrl != "no_url" && imageUrl != "") {
+            Glide.with(profileImg.context)
+                .load(imageUrl)
+                .into(profileImg)
+        }
+
+        profileImg.setOnClickListener {
+            val intent = Intent(this, ProfileActivity::class.java)
+            startActivity(intent)
+        }
     }
 
 //    override fun onCreateOptionsMenu(menu: Menu): Boolean {

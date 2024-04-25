@@ -105,6 +105,7 @@ class SignInActivity : AppCompatActivity() {
         sharedPreferences.edit().putString("email", user.email).apply()
         sharedPreferences.edit().putInt("type", user.type).apply()
         sharedPreferences.edit().putString("id", user.id).apply()
+        sharedPreferences.edit().putString("image", user.image).apply()
 
         when ( user.type) {
             0 ->  navigateToHome()

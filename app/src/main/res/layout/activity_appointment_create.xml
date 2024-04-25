@@ -45,15 +45,22 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1.5"
+            android:layout_weight="2.5"
             android:orientation="vertical"
             android:gravity="center">
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Doctor Direction"
+                android:id="@+id/directionBtn"
+                android:layout_marginTop="10dp"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Select your appointment date"
                 android:textColor="@color/black"
                 android:textStyle="bold"
+                android:layout_marginTop="10dp"
                 android:textSize="16dp"/>
 
             <Button
@@ -67,7 +74,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="7.5"
+            android:layout_weight="6.5"
             android:orientation="vertical"
             android:gravity="center">
 

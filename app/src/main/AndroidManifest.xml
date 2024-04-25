@@ -2,7 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <application
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+<application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -12,6 +15,18 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.LoginAndSignUp"
         tools:targetApi="31">
+        <activity
+            android:name=".View.UsersListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".View.BookingListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".View.ReportListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".View.ProfileActivity"
+            android:exported="false" />
         <activity
             android:name=".View.ReportDetailsActivity"
             android:exported="false" />

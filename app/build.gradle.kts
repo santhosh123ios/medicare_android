@@ -80,12 +80,16 @@ dependencies {
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("androidx.recyclerview:recyclerview-selection:1.1.0")
 
-
     implementation("androidx.cardview:cardview:1.0.0")
     implementation("com.google.android.material:material:1.7.0")
-
 
     implementation("com.google.firebase:firebase-storage-ktx")
     implementation("com.google.firebase:firebase-firestore-ktx")
     implementation("com.google.firebase:firebase-auth-ktx") // Optional if you're using Firebase Authentication
+
+    implementation("com.github.bumptech.glide:glide:4.15.1")
+    annotationProcessor("com.github.bumptech.glide:compiler:4.15.1")
+
+    implementation("com.google.android.gms:play-services-location:21.0.1")  // Latest version of Google Play Services Location
+
 }

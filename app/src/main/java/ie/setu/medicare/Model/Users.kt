@@ -13,8 +13,11 @@ class Users {
     val catId: String = ""
     val catName: String = ""
     val place: String = ""
+    val image: String = ""
+    val latitude: String = ""
+    val longitude: String = ""
 }
-
+//"Latitude: $latitude, Longitude: $longitude"
 //data class Users(
 //    val id: String,
 //    val name: String,

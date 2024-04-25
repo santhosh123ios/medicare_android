@@ -438,4 +438,129 @@ class SignInActivityVM : ViewModel() {
             }
         })
     }
+
+
+    fun updateUserProfile(id: String, img: String, callback: (Boolean) -> Unit) {
+        // Reference the category item in the database using catId
+        val categoriesRef: DatabaseReference = database.getReference("users")
+        val categoryRef = categoriesRef.child(id)
+
+        // Convert updated category to a map of properties to update
+        val updates = mapOf(
+            "id" to id,
+            "image" to img
+        )
+
+        // Update the category in the database
+        categoryRef.updateChildren(updates)
+            .addOnSuccessListener {
+                // Update successful
+                callback(true)
+            }
+            .addOnFailureListener {
+                // Update failed
+                callback(false)
+            }
+    }
+
+    fun getMyBookingAllList(callback: (List<Appointment>?) -> Unit) {
+
+//        val categoriesRef: DatabaseReference = database.getReference("categories")
+//        categoriesRef.addListenerForSingleValueEvent(object : ValueEventListener {
+//            override fun onDataChange(snapshot: DataSnapshot) {
+//                val categoryList = mutableListOf<CategoryList>()
+//                for (categorySnapshot in snapshot.children) {
+
+
+        // Query to retrieve items with type = 1
+        val usersRef: DatabaseReference = database.getReference("appointments")
+        ///val query = usersRef.orderByChild("ptId").equalTo(ptId) // Specify type as double
+
+        usersRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val itemList = mutableListOf<Appointment>()
+                for (itemSnapshot in snapshot.children) {
+                    val item = itemSnapshot.getValue(Appointment::class.java)
+                    item?.let {
+                        itemList.add(it)
+                    }
+                }
+                callback(itemList)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                // Handle error
+                callback(null)
+            }
+        })
+    }
+
+    fun getMyReportAllList(callback: (List<Reports>?) -> Unit) {
+        // Query to retrieve items with type = 1
+        val usersRef: DatabaseReference = database.getReference("reports")
+        //val query = usersRef.orderByChild("ptId").equalTo(drId) // Specify type as double
+        usersRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val itemList = mutableListOf<Reports>()
+                for (itemSnapshot in snapshot.children) {
+                    val item = itemSnapshot.getValue(Reports::class.java)
+                    item?.let {
+                        itemList.add(it)
+                    }
+                }
+                callback(itemList)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                // Handle error
+                callback(null)
+            }
+        })
+    }
+
+    fun getAllUsersList(callback: (List<Users>?) -> Unit) {
+        // Query to retrieve items with type = 1
+        val usersRef: DatabaseReference = database.getReference("users")
+        usersRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val itemList = mutableListOf<Users>()
+                for (itemSnapshot in snapshot.children) {
+                    val item = itemSnapshot.getValue(Users::class.java)
+                    item?.let {
+                        itemList.add(it)
+                    }
+                }
+                callback(itemList)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                // Handle error
+                callback(null)
+            }
+        })
+    }
+
+    fun updateDrLocation(id: String,latitude: String,longitude: String, callback: (Boolean) -> Unit) {
+        // Reference the category item in the database using catId
+        val categoriesRef: DatabaseReference = database.getReference("users")
+        val categoryRef = categoriesRef.child(id)
+
+        // Convert updated category to a map of properties to update
+        val updates = mapOf(
+            "id" to id,
+            "latitude" to latitude,
+            "longitude" to longitude
+        )
+
+        // Update the category in the database
+        categoryRef.updateChildren(updates)
+            .addOnSuccessListener {
+                // Update successful
+                callback(true)
+            }
+            .addOnFailureListener {
+                // Update failed
+                callback(false)
+            }
+    }
 }
