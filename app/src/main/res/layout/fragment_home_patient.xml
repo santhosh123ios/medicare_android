@@ -6,13 +6,18 @@
     android:orientation="vertical"
     tools:context=".View.ui.homePatient.HomePatientFragment">
 
-   <LinearLayout
+   <RelativeLayout
        android:layout_width="match_parent"
        android:layout_height="80dp"
-       android:orientation="horizontal">
+       android:gravity="center"
+       android:padding="16dp">
 
+       <SearchView
+           android:id="@+id/search_view"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"/>
 
-   </LinearLayout>
+   </RelativeLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"

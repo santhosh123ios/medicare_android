@@ -1,29 +1,23 @@
 package ie.setu.medicare.View.ui.homePatient
 
+import android.R
 import android.content.Intent
 import android.os.Bundle
-import android.os.Parcelable
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.viewModels
+import android.widget.SearchView
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import ie.setu.medicare.Model.CategoryList
 import ie.setu.medicare.Model.Users
-import ie.setu.medicare.R
-import ie.setu.medicare.View.Adapter.ItemAdapter
 import ie.setu.medicare.View.Adapter.ItemCatHorizontalAdapter
 import ie.setu.medicare.View.AppointmentCreateActivity
-import ie.setu.medicare.View.PatientActivity
-import ie.setu.medicare.View.ui.homeDr.HomeDrViewModel
 import ie.setu.medicare.ViewModels.SignInActivityVM
-import ie.setu.medicare.databinding.FragmentHomeDrBinding
 import ie.setu.medicare.databinding.FragmentHomePatientBinding
-import kotlinx.android.parcel.Parcelize
+
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -39,6 +33,7 @@ class HomePatientFragment : Fragment() {
 
     private var _binding: FragmentHomePatientBinding? = null
     private lateinit var recyclerView: RecyclerView
+    private lateinit var searchView: SearchView
     private lateinit var adapter: ItemCatHorizontalAdapter
     val usersList = mutableListOf<Users>()
     private val viewModel: SignInActivityVM by viewModels()
@@ -65,6 +60,7 @@ class HomePatientFragment : Fragment() {
 //        }
 
         // Initialize your RecyclerView and Adapter
+        searchView = binding.searchView
         recyclerView = binding.recyclerView
         adapter = ItemCatHorizontalAdapter(usersList, ::onSelectAction)
         //recyclerView.layoutManager = LinearLayoutManager(this)
@@ -72,13 +68,25 @@ class HomePatientFragment : Fragment() {
         val layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         recyclerView.layoutManager = layoutManager
         recyclerView.adapter = adapter
+        getDrList()
+        // Set up a listener for search queries
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                // Handle query submission if necessary
+                return false
+            }
 
-
+            override fun onQueryTextChange(newText: String?): Boolean {
+                // Call the filter method of your adapter
+                adapter.filter(newText ?: "")
+                return true
+            }
+        })
 
         // Add some sample data to the list
         ////items.addAll(listOf("Item 1", "Item 2", "Item 3"))
         ///getCategoriesData()
-        getDrList()
+
 
         return root
     }

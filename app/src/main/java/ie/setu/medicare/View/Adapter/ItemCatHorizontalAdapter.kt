@@ -15,9 +15,9 @@ import ie.setu.medicare.Model.Users
 import ie.setu.medicare.R
 import ie.setu.medicare.View.PatientActivity
 
-class ItemCatHorizontalAdapter(private val items: MutableList<Users>, private val onSelectAction: (Int) -> Unit) :
+class ItemCatHorizontalAdapter(private var items: MutableList<Users>, private val onSelectAction: (Int) -> Unit) :
     RecyclerView.Adapter<ItemCatHorizontalAdapter.ViewHolder>() {
-
+    private var originalDataList = items as MutableList<Users>
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(name: String,catName: String,phone: String,place: String,pos:Int) {
             itemView.findViewById<TextView>(R.id.itemText).text = name
@@ -48,6 +48,19 @@ class ItemCatHorizontalAdapter(private val items: MutableList<Users>, private va
         return items.size
     }
 
-
+    fun filter(query: String) {
+        if (query.isEmpty()) {
+            items = originalDataList
+        } else {
+            // Filter the list based on the query
+            items = originalDataList.filter { data ->
+                // Compare the query with the data properties
+                // Assuming MyData has properties name and description
+                data.name.contains(query, ignoreCase = true) || data.place.contains(query, ignoreCase = true)
+            } as MutableList<Users>
+        }
+        // Notify the adapter of data changes
+        notifyDataSetChanged()
+    }
 
 }

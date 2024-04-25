@@ -15,6 +15,7 @@ import ie.setu.medicare.Model.Appointments
 import ie.setu.medicare.Model.Category
 import ie.setu.medicare.Model.CategoryList
 import ie.setu.medicare.Model.Report
+import ie.setu.medicare.Model.Reports
 import ie.setu.medicare.Model.Slots
 import ie.setu.medicare.Model.SlotsList
 import ie.setu.medicare.Model.Users
@@ -388,5 +389,53 @@ class SignInActivityVM : ViewModel() {
                 // Failed to insert
                 callback(false)
             }
+    }
+
+    fun getMyReportList(drId:String,callback: (List<Reports>?) -> Unit) {
+        // Query to retrieve items with type = 1
+        val usersRef: DatabaseReference = database.getReference("reports")
+        val query = usersRef.orderByChild("drId").equalTo(drId) // Specify type as double
+
+        query.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val itemList = mutableListOf<Reports>()
+                for (itemSnapshot in snapshot.children) {
+                    val item = itemSnapshot.getValue(Reports::class.java)
+                    item?.let {
+                        itemList.add(it)
+                    }
+                }
+                callback(itemList)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                // Handle error
+                callback(null)
+            }
+        })
+    }
+
+    fun getMyReportPtList(drId:String,callback: (List<Reports>?) -> Unit) {
+        // Query to retrieve items with type = 1
+        val usersRef: DatabaseReference = database.getReference("reports")
+        val query = usersRef.orderByChild("ptId").equalTo(drId) // Specify type as double
+
+        query.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val itemList = mutableListOf<Reports>()
+                for (itemSnapshot in snapshot.children) {
+                    val item = itemSnapshot.getValue(Reports::class.java)
+                    item?.let {
+                        itemList.add(it)
+                    }
+                }
+                callback(itemList)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                // Handle error
+                callback(null)
+            }
+        })
     }
 }

@@ -4,6 +4,8 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.widget.Button
+import android.widget.EditText
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -62,10 +64,13 @@ class CreateReportActivity : AppCompatActivity() {
         // Set the button text to the formatted date
         crntDate = formattedDate
 
+        findViewById<ImageView>(R.id.back_button).setOnClickListener {
+            finish()
+        }
         findViewById<TextView>(R.id.itemText).text = "Patient : "+ptName
         findViewById<TextView>(R.id.slotText).text = "Slot : "+apSlot
         findViewById<TextView>(R.id.dateText).text = "Date : "+apDate
-        var reportText = findViewById<TextView>(R.id.dateText)
+        var reportText = findViewById<EditText>(R.id.editTextTextMultiLine)
 
         findViewById<Button>(R.id.submitBtn).setOnClickListener {
 

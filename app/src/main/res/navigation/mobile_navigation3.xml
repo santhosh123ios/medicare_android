@@ -19,7 +19,7 @@
 
     <fragment
         android:id="@+id/nav_slideshow"
-        android:name="ie.setu.medicare.View.ui.slideshow.SlideshowFragment"
+        android:name="ie.setu.medicare.View.DrReportFragment"
         android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
+        tools:layout="@layout/fragment_dr_report" />
 </navigation>
