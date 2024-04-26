@@ -1,6 +1,7 @@
 package ie.setu.medicare.View
 
 import android.Manifest
+import android.app.UiModeManager
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -10,14 +11,19 @@ import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
+import android.widget.EditText
 import android.widget.ImageView
+import android.widget.RadioButton
+import android.widget.RadioGroup
 import android.widget.SearchView
+import android.widget.Switch
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.app.ActivityCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -27,6 +33,7 @@ import com.google.android.gms.location.LocationServices
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
 import com.google.firebase.storage.storage
+import ie.setu.medicare.Model.Users
 import ie.setu.medicare.R
 import ie.setu.medicare.ViewModels.SignInActivityVM
 
@@ -44,10 +51,21 @@ class ProfileActivity : AppCompatActivity() {
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private val LOCATION_PERMISSION_REQUEST_CODE = 1
 
+    private lateinit var nameEt: EditText
+    private lateinit var heightEt: EditText
+    private lateinit var weightEt: EditText
+    private lateinit var dobEt: EditText
+
+    private lateinit var gentRadioGroups:RadioGroup
+    private lateinit var gentRdBtn1:RadioButton
+    private lateinit var gentRdBtn2:RadioButton
+    var genValue = "male"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_profile)
+        val uiModeManager = getSystemService(Context.UI_MODE_SERVICE) as UiModeManager
+        uiModeManager.nightMode = UiModeManager.MODE_NIGHT_YES // Enable dark mode
 
         sharedPreferences = getSharedPreferences("auth_pref", Context.MODE_PRIVATE)
         profile_img = findViewById(R.id.profile_img)
@@ -65,8 +83,63 @@ class ProfileActivity : AppCompatActivity() {
         emailTextView.text = email
         val back_button = findViewById<ImageView>(R.id.back_button)
         val update_lat_and_log = findViewById<Button>(R.id.update_lat_and_log)
+        val submit_btn = findViewById<Button>(R.id.submit_btn)
+        val switch_mode = findViewById<Switch>(R.id.switch_mode)
+        var mode = sharedPreferences.getBoolean("dark_mode",false)
+        if (mode)
+        {
+            switch_mode.isChecked = true
+        }
+        else
+        {
+            switch_mode.isChecked = false
+        }
+        switch_mode.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked) {
+                // The switch is ON (feature enabled)
+                sharedPreferences.edit().putBoolean("dark_mode", true).apply()
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+            } else {
+                // The switch is OFF (feature disabled)
+                sharedPreferences.edit().putBoolean("dark_mode", false).apply()
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+            }
+        }
         back_button.setOnClickListener {
             finish()
+        }
+
+        nameEt = findViewById(R.id.nameEdit)
+        heightEt = findViewById(R.id.height_id)
+        weightEt = findViewById(R.id.weight_id)
+        dobEt = findViewById(R.id.dob_id)
+
+        gentRadioGroups = findViewById(R.id.rendRadioGroup)
+        gentRdBtn1 = findViewById(R.id.male_radio_btn)
+        gentRdBtn2 = findViewById(R.id.female_radio_btn)
+
+        gentRadioGroups.setOnCheckedChangeListener { _, checkedId ->
+            val radio: RadioButton = findViewById(checkedId)
+            when (radio) {
+                gentRdBtn1 -> {
+                    // some code
+                    genValue = "male"
+                }
+                gentRdBtn2 -> {
+                    // some code
+                    genValue = "female"
+                }
+            }
+        }
+
+        submit_btn.setOnClickListener {
+            if (nameEt.text.isNotEmpty() && heightEt.text.isNotEmpty() && weightEt.text.isNotEmpty()&& dobEt.text.isNotEmpty()) {
+                updateUser()
+            }
+            else
+            {
+                Toast.makeText(this, "Empty Fields Are not Allowed !!", Toast.LENGTH_SHORT).show()
+            }
         }
 
         update_lat_and_log.setOnClickListener {
@@ -103,7 +176,46 @@ class ProfileActivity : AppCompatActivity() {
             locationTxt.visibility = View.GONE
             update_lat_and_log.visibility = View.GONE
         }
+        getUserDetails()
+    }
 
+    private fun getUserDetails()
+    {
+        val id = sharedPreferences.getString("id", "id").toString()
+        viewModel.getUserData(id) {user ->
+
+            if (user != null) {
+                nameEt.setText(user.name)
+                heightEt.setText(user.height)
+                weightEt.setText(user.weight)
+                dobEt.setText(user.dob)
+                if (user.gent == "female")
+                {
+                    val radioButtonId = R.id.female_radio_btn
+                    gentRadioGroups.check(radioButtonId)
+                }
+                else
+                {
+                    val radioButtonId = R.id.male_radio_btn
+                    gentRadioGroups.check(radioButtonId)
+                }
+            }
+        }
+    }
+
+    private fun updateUser() {
+        val id = sharedPreferences.getString("id", "id").toString()
+        viewModel.updateUserDetails(id,nameEt.text.toString(),heightEt.text.toString(),weightEt.text.toString(),dobEt.text.toString(),genValue) { isSuccess ->
+            if (isSuccess) {
+                // Update successful
+                println("Profile updated successfully.")
+                Toast.makeText(this, "Profile updated successfully", Toast.LENGTH_SHORT).show()
+            } else {
+                // Update failed
+                println("Failed to update Profile.")
+                Toast.makeText(this, "Failed to  update Profile.", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     private fun uploadImageToStorage(imageUri: Uri) {
@@ -234,4 +346,5 @@ class ProfileActivity : AppCompatActivity() {
             }
         }
     }
+
 }

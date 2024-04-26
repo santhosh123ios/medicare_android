@@ -26,7 +26,7 @@ class DrActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityDrBinding
     private lateinit var sharedPreferences: SharedPreferences
-
+    private lateinit var navView: NavigationView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -43,7 +43,7 @@ class DrActivity : AppCompatActivity() {
 //        }
 
         val drawerLayout: DrawerLayout = binding.drawerLayout
-        val navView: NavigationView = binding.navView
+        navView = binding.navView
         val navController = findNavController(R.id.nav_host_fragment_content_dr)
 
         appBarConfiguration = AppBarConfiguration(
@@ -62,6 +62,12 @@ class DrActivity : AppCompatActivity() {
                     handleSignOut()
                     true // Return true to indicate the event has been handled
                 }
+                R.id.nav_profile -> {
+                    // Handle profile option
+                    val intent = Intent(this, ProfileActivity::class.java)
+                    startActivity(intent)
+                    true // Return true to indicate the event has been handled
+                }
                 else -> {
                     // Let the NavigationController handle other selections
                     navController.navigate(menuItem.itemId)
@@ -72,6 +78,11 @@ class DrActivity : AppCompatActivity() {
         }
 
         // Call a method to set the navigation header's name and email
+        setNavigationHeaderInfo(navView)
+    }
+
+    override fun onResume() {
+        super.onResume()
         setNavigationHeaderInfo(navView)
     }
 

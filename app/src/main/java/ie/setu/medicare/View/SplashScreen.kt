@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatDelegate
 import ie.setu.medicare.R
 
 class SplashScreen : AppCompatActivity() {
@@ -12,9 +13,18 @@ class SplashScreen : AppCompatActivity() {
     private lateinit var sharedPreferences: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        sharedPreferences = getSharedPreferences("auth_pref", Context.MODE_PRIVATE)
+        var mode = sharedPreferences.getBoolean("dark_mode",false)
+        if (mode)
+        {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        }
+        else
+        {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash_screen)
-        sharedPreferences = getSharedPreferences("auth_pref", Context.MODE_PRIVATE)
         // Check if the user is already authenticated
         if (isLoggedIn()) {
             // User is signed in, navigate to home page

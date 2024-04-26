@@ -26,7 +26,7 @@
             android:exported="false" />
         <activity
             android:name=".View.ProfileActivity"
-            android:exported="false" />
+            android:exported="false"/>
         <activity
             android:name=".View.ReportDetailsActivity"
             android:exported="false" />
@@ -38,7 +38,7 @@
             android:exported="false" />
         <activity
             android:name=".View.AppointmentCreateActivity"
-            android:exported="false" />
+            android:exported="false"/>
         <activity
             android:name=".View.DrActivity"
             android:exported="false"

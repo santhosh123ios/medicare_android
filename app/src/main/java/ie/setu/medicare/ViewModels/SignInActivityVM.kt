@@ -563,4 +563,58 @@ class SignInActivityVM : ViewModel() {
                 callback(false)
             }
     }
+
+    fun updateUserDetails(id: String,name: String,height: String,weight: String,dob: String,gent: String, callback: (Boolean) -> Unit) {
+        // Reference the category item in the database using catId
+
+        val categoriesRef: DatabaseReference = database.getReference("users")
+        val categoryRef = categoriesRef.child(id)
+
+        // Convert updated category to a map of properties to update
+        val updates = mapOf(
+            "id" to id,
+            "name" to name,
+            "height" to height,
+            "weight" to weight,
+            "dob" to dob,
+            "gent" to gent
+        )
+
+        // Update the category in the database
+        categoryRef.updateChildren(updates)
+            .addOnSuccessListener {
+                // Update successful
+                callback(true)
+            }
+            .addOnFailureListener {
+                // Update failed
+                callback(false)
+            }
+    }
+
+    fun getUserData(id: String,callback: (Users?) -> Unit) {
+        val usersRef: DatabaseReference = database.getReference("users")
+        val query = usersRef.orderByChild("id").equalTo(id) // Specify type as double
+        query.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                //val itemList = mutableListOf<Users>()
+                val user = snapshot.children.first().getValue(Users::class.java)
+                if (user != null)
+                {
+                    callback(user)
+                }
+                else
+                {
+                    callback(null)
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                // Handle error
+                callback(null)
+            }
+        })
+    }
+
+
 }

@@ -165,7 +165,7 @@ class SignInActivity : AppCompatActivity() {
             // Signed in successfully, show authenticated UI.
             if (account != null)
             {
-                val emailToCheck = "santhosh@gmail.com"+account.email
+                val emailToCheck = account.email.toString()
                 val password = ""
                 viewModel.userValidation(emailToCheck,password,true) { status,user ->
                     if (status)

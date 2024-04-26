@@ -16,6 +16,10 @@ class Users {
     val image: String = ""
     val latitude: String = ""
     val longitude: String = ""
+    val height: String = ""
+    val weight: String = ""
+    val dob: String = ""
+    val gent: String = ""
 }
 //"Latitude: $latitude, Longitude: $longitude"
 //data class Users(
